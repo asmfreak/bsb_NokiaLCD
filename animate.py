@@ -1,5 +1,7 @@
+#!/usr/bin/python
 # Copyright (c) 2014 Adafruit Industries
 # Author: Tony DiCola
+# Modified for BSB by Asmfreak
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +24,8 @@
 import math
 import time
 
-from bsb_io import *
-import spidev
 import NokiaLCD as lcd
 
-from PIL import Image
-from PIL import ImageFont
-from PIL import ImageDraw
 
 
 disp = lcd.display()

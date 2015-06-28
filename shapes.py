@@ -1,5 +1,7 @@
+#!/usr/bin/python
 # Copyright (c) 2014 Adafruit Industries
 # Author: Tony DiCola
+# Modified for BSB by Asmfreak
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +26,14 @@ import sys
 
 from bsb_io import *
 import spidev
-import PCD8544
+import NokiaLCD as lcd
 
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-
-DC = 22
-RST = 20
-SPI_PORT = 1
-SPI_DEVICE = 0
-
-disp = PCD8544.PCD8544(DC, RST, SPI_PORT, SPI_DEVICE)
-
-
-# Initialize library.
-disp.begin(contrast=60)
-
-# Clear display.
-disp.clear()
-disp.display()
-
-# Create blank image for drawing.
-# Make sure to create image with mode '1' for 1-bit color.
-image = Image.new('1', (PCD8544.LCDWIDTH, PCD8544.LCDHEIGHT))
-
-# Get drawing object to draw on image.
-draw = ImageDraw.Draw(image)
+disp = lcd.display()
+image, draw = lcd.image()
 
 # Draw a white filled box to clear the image.
 draw.rectangle((0,0,PCD8544.LCDWIDTH,PCD8544.LCDHEIGHT), outline=255, fill=255)

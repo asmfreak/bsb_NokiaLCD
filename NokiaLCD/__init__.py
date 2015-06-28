@@ -32,7 +32,8 @@ from PIL import ImageDraw
 from PIL import ImageFont
 
 def init():
-    import init_spi
+    from init_spi import init_spi
+    init_spi()
 
 def display():
     init()
