@@ -19,8 +19,16 @@ def init_spi():
 
     args = "bus{device}={port},{clk},{mosi},{miso},{mode},{max_speed},{cs}".format(**vars)
 
-    call(["rmmod", "spi-gpio-custom"])
-    call(["insmod","spi-gpio-custom", args])
+    try:
+        with open("/tmp/lcd-spi.cfg","r") as f:
+            need_loading = f.readline() != (args+'\n')
+    except IOError:
+        need_loading = True
+    if need_loading:
+        call(["rmmod", "spi-gpio-custom"])
+        call(["insmod","spi-gpio-custom", args])
+        with open("/tmp/lcd-spi.cfg", "w") as f:
+            f.write(args+"\n")
 
 if __name__ == "__main__":
     init_spi()

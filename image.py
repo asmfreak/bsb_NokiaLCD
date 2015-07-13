@@ -21,13 +21,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import os
+
 from PIL import Image
 import NokiaLCD as lcd
 
 disp = lcd.display()
 
 # Load image and convert to 1 bit color.
-image = Image.open('swiftlogo.ppm').convert('1')
+path = os.path.dirname(os.path.abspath(__file__))
+image = Image.open(path+'/swiftlogo.ppm').convert('1')
 
 
 # Display image.
