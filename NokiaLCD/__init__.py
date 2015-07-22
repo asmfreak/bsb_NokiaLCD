@@ -20,10 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import time
-
-from bsb_io import *
-import spidev
 import PCD8544
 from config import config
 
@@ -31,9 +27,13 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
+width, height = size = PCD8544.LCDWIDTH, PCD8544.LCDHEIGHT
+
+
 def init():
     from init_spi import init_spi
     init_spi()
+
 
 def display():
     init()
@@ -50,6 +50,12 @@ def display():
     disp.display()
     return disp
 
+def clear_image(draw):
+    draw.rectangle(
+        (0, 0, PCD8544.LCDWIDTH, PCD8544.LCDHEIGHT),
+        outline=255, fill=255)
+    
+
 def image():
     # Create blank image for drawing.
     # Make sure to create image with mode '1' for 1-bit color.
@@ -59,8 +65,11 @@ def image():
     draw = ImageDraw.Draw(image)
 
     # Draw a white filled box to clear the image.
-    draw.rectangle((0,0,PCD8544.LCDWIDTH,PCD8544.LCDHEIGHT), outline=255, fill=255)
+    draw.rectangle(
+        (0, 0, PCD8544.LCDWIDTH, PCD8544.LCDHEIGHT),
+        outline=255, fill=255)
     return image, draw
+
 
 def font(name, size):
     return ImageFont.truetype(name, size)

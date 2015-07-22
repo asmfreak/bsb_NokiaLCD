@@ -47,12 +47,21 @@ PCD8544_SETVOP = 0x80
 class PCD8544(object):
     """Nokia 5110/3310 PCD8544-based LCD display."""
 
-    def __init__(self, dc, rst, spid, spib):
+    def __init__(self, dc, rst, spid, spib, bl=None):
         self._dc = Pin(dc)
         # Default to detecting platform GPIO.
         if rst is not None:
             self._rst = Pin(rst)
             self._rst.direction = OUTPUT
+        else:
+            self._rst = None
+        if bl is not None:
+            self._bl = Pin(bl)
+            self._bl.direction = OUTPUT
+            self._blv = LOW
+            self._bl.value = self._blv
+        else:
+            self._bl = None
         # Default to bit bang SPI.
         self._spi = spidev.SpiDev()
         self._spi.open(spid, spib)
@@ -172,6 +181,19 @@ class PCD8544(object):
     def set_bias(self, bias):
         """Set bias"""
         self.extended_command(PCD8544_SETBIAS | bias)
-
+        
+    def set_backlight(self, bl):
+        if self._bl is None:
+            return 0
+        if bl != 1 or bl != 0:
+            raise ValueError(str(bl))
+        self._blv = 1 - bl
+        self._bl.value = self._blv
+    
+    def backlight(self):
+        if self._bl is None:
+            return 0
+        return 1 - self._blv
+    
     def __repr__(self):
         return "NokiaLCD"

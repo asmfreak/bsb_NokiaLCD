@@ -14,11 +14,15 @@ setup(
     license="GPL",
     keywords="blackswift nokialcd",
     url="http://packages.python.org/",
-    packages=['NokiaLCD'],
+    packages=['NokiaLCD', 'NokiaLCDServer'],
     long_description=read("README.md"),
-    classifiers=
-        ["Development Status :: 3 - Alpha",
-         "Topic :: Utilities",
-         "License :: OSI Approved :: BSD License",
-         ],
+    package_data={
+        "NokiaLCD": ["config.ini"],
+        "NokiaLCDServer": ["*.ttf", "config.ini"],
+    },
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Topic :: Utilities",
+        "License :: OSI Approved :: BSD License",
+    ],
 )
